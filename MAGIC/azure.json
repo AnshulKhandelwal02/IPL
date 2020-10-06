@@ -1,0 +1,17 @@
+{
+  "hosting": [
+    {
+      "app": {
+        "project": "MAGIC",
+        "target": "build",
+        "configuration": "production",
+        "path": "dist/MAGIC"
+      },
+      "azureHosting": {
+        "subscription": "828fa062-bf66-49a7-b3c5-3d4b4d492f87",
+        "resourceGroupName": "PocRescGroup",
+        "account": ""
+      }
+    }
+  ]
+}
