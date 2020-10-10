@@ -54,6 +54,8 @@ interface TeamSummary {
    teamName: String;
    points: number;
    transfersDone: number;
+   viceCaptain: string;
+   captain: string;
  }
 
 export interface TeamDataList {

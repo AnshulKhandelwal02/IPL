@@ -96,13 +96,14 @@
   </div> -->
 
   <div class="container">
-    <ng-template #customLoadingTemplate>
       <table class="table table-striped">
         <thead>  
             <tr>  
               <th>Team Name</th>  
               <th>Points</th>  
               <th>Subs</th>  
+              <th>Captain</th>  
+              <th>Vice-Captain</th>  
             </tr>
         </thead>  
         <tbody>  
@@ -110,10 +111,11 @@
             <td>{{ team.teamName }}</td>
             <td>{{ team.points }}</td>
             <td>{{ team.transfersDone }}</td>  
+            <td>{{ team.captain }}</td>  
+            <td>{{ team.viceCaptain }}</td>  
           </tr>  
         </tbody>  
       </table>
-    </ng-template>  
 
     <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
   </div>

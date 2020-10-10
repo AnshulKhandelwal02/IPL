@@ -164,10 +164,10 @@ namespace Magic.Web.Services
                 leagueSummary.Points = data.Gdpts.Sum(x => Convert.ToDecimal(x.Gdpts)).ToString();
 
                 leagueSummary.Captain =
-                    data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => x.Gdid)))?.CaptainName;
+                    data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => y.Gdid)))?.CaptainName;
 
                 leagueSummary.ViceCaptain =
-                    data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => x.Gdid)))?.ViceCaptainName;
+                    data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => y.Gdid)))?.ViceCaptainName;
 
 
                 result.Add(leagueSummary);
