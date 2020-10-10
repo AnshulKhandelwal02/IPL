@@ -72,6 +72,8 @@
             <th>Team Name</th>
             <th>Points</th>  
             <th>Subs</th>
+            <th>Day Points</th>  
+            <th>Day Subs</th>
             <!-- <th>Day Points</th>  
             <th>Day Subs</th>
             <th>Team 1</th>
@@ -92,6 +94,8 @@
           <td>{{ team.teamName }}</td>
           <td>{{ team.points }}</td>
           <td>{{ team.transfersDone }}</td>  
+          <td>{{ team.dayPoints }} ({{ team.dayPointsMatchNumber }})</td>  
+          <td>{{ team.dayTransfers }} ({{ team.dayTransfersMatchNumber }})</td>  
         </tr>  
       </tbody>  
     </table>

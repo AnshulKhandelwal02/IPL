@@ -9,6 +9,8 @@ export interface TeamSummary {
     rank: number;
     dayPoints: number;
     dayTransfers: number;
+    dayPointsMatchNumber: number;
+    dayTransfersMatchNumber: number;
   }
  
  export interface TeamDataList {

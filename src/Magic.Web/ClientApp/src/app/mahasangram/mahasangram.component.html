@@ -76,6 +76,8 @@
               <th>Subs</th>  
               <th>Captain</th>  
               <th>Vice-Captain</th>  
+              <th>Day Points</th>  
+              <th>Day Subs</th>
             </tr>
         </thead>  
         <tbody>  
@@ -87,6 +89,8 @@
             <td>{{ team.transfersDone }}</td>  
             <td>{{ team.captain }}</td>  
             <td>{{ team.viceCaptain }}</td>  
+            <td>{{ team.dayPoints }} ({{ team.dayPointsMatchNumber }})</td>  
+            <td>{{ team.dayTransfers }} ({{ team.dayTransfersMatchNumber }})</td>  
           </tr>  
         </tbody>  
       </table>

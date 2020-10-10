@@ -36,5 +36,7 @@ namespace Magic.Web.Models
         public long Rank { get; set; }
         public decimal DayPoints { get; set; }
         public long DayTransfers { get; set; }
+        public long DayPointsMatchNumber { get; set; }
+        public long DayTransfersMatchNumber { get; set; }
     }
 }

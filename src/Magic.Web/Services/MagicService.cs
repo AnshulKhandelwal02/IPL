@@ -133,7 +133,10 @@ namespace Magic.Web.Services
                         ?.ViceCaptainName,
 
                     DayPoints = Convert.ToDecimal(data.Gdpts.FirstOrDefault(x => x.Gdid == (data.Gdpts.Max(y => y.Gdid)))?.Gdpts),
-                    DayTransfers = data.Teams.FirstOrDefault(x => x.Gdid == data.Teams.Max(y => y.Gdid)).SubsUsed
+                    DayTransfers = data.Teams.FirstOrDefault(x => x.Gdid == data.Teams.Max(y => y.Gdid)).SubsUsed,
+
+                    DayPointsMatchNumber = data.Gdpts.Max(y => y.Gdid),
+                    DayTransfersMatchNumber = data.Teams.Max(y => y.Gdid)
                 };
 
                 result.Add(leagueSummary);
@@ -169,7 +172,11 @@ namespace Magic.Web.Services
                 Rank = i + 1,
                 TeamName = x.TeamName,
                 Points = x.Points,
-                TransfersDone = x.TransfersDone
+                TransfersDone = x.TransfersDone,
+                DayTransfers = x.DayTransfers,
+                DayPoints = x.DayPoints,
+                DayTransfersMatchNumber = x.DayTransfersMatchNumber,
+                DayPointsMatchNumber = x.DayPointsMatchNumber
             }).ToList();
 
             //return newResult;
@@ -185,7 +192,10 @@ namespace Magic.Web.Services
                 TransfersDone = Team1.TransfersDone + Team2.TransfersDone,
 
                 DayPoints = Team1.DayPoints + Team2.DayPoints,
-                DayTransfers = Team1.DayTransfers + Team2.DayTransfers
+                DayTransfers = Team1.DayTransfers + Team2.DayTransfers,
+
+                DayPointsMatchNumber = Team1.DayPointsMatchNumber,
+                DayTransfersMatchNumber = Team1.DayTransfersMatchNumber
             };
 
             return item;
