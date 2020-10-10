@@ -62,8 +62,6 @@ namespace Magic.Web.Services
 
                 foreach (var team in leaderboard.Data.Value)
                 {
-                    List<TeamDaySummary> TeamDaySummaries = new List<TeamDaySummary>();
-
                     stopWatch.Reset();
                     stopWatch.Start();
                     Console.WriteLine("Getting data for Team Id = {0}", team.Temid.ToString());
@@ -74,6 +72,7 @@ namespace Magic.Web.Services
 
                     teamDataList.TeamId = team.Temid;
                     teamDataList.TeamName = team.Temname;
+                    teamDataList.Rank = team.Rank;
 
                     Parallel.ForEach(request.DayList, new ParallelOptions() { MaxDegreeOfParallelism = 6 }, index =>
                     {
@@ -122,18 +121,20 @@ namespace Magic.Web.Services
             List<LeagueSummary> result = new List<LeagueSummary>();
             foreach (var data in rawData)
             {
-                var leagueSummary = new LeagueSummary();
+                var leagueSummary = new LeagueSummary
+                {
+                    TeamId = data.TeamId,
+                    TeamName = data.TeamName,
+                    Rank = data.Rank,
+                    TransfersDone = data.Teams.Sum(x => x.SubsUsed),
+                    Points = data.Gdpts.Sum(x => Convert.ToDecimal(x.Gdpts)),
+                    Captain = data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => y.Gdid)))?.CaptainName,
+                    ViceCaptain = data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => y.Gdid)))
+                        ?.ViceCaptainName,
 
-                leagueSummary.TeamName = data.TeamName;
-                leagueSummary.TransfersDone = data.Teams.Sum(x => x.SubsUsed).ToString();
-                leagueSummary.Points = data.Gdpts.Sum(x => Convert.ToDecimal(x.Gdpts)).ToString();
-
-                leagueSummary.Captain =
-                    data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => y.Gdid)))?.CaptainName;
-
-                leagueSummary.ViceCaptain =
-                    data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => y.Gdid)))?.ViceCaptainName;
-
+                    DayPoints = Convert.ToDecimal(data.Gdpts.FirstOrDefault(x => x.Gdid == (data.Gdpts.Max(y => y.Gdid)))?.Gdpts),
+                    DayTransfers = data.Teams.FirstOrDefault(x => x.Gdid == data.Teams.Max(y => y.Gdid)).SubsUsed
+                };
 
                 result.Add(leagueSummary);
             }
@@ -141,19 +142,54 @@ namespace Magic.Web.Services
             return result;
         }
 
-        public void GroupData(DataTable dtResult)
+        public List<LeagueSummary> SummarizeData(List<LeagueSummary> result)
         {
-            var result = from r in dtResult.AsEnumerable()
-                group r by r.Field<long>("TeamId")
-                into TeamGroup
-                from row in TeamGroup
-                select new
-                {
-                    TeamId = TeamGroup.Key,
-                    TeamName = row.Field<string>("TeamName"),
-                    TransfersDone = TeamGroup.Sum(x => x.Field<long>("TransfersDone")),
-                    Points = TeamGroup.Sum(x => x.Field<long>("Points"))
-                };
+
+            List<LeagueSummary> newResult = new List<LeagueSummary>();
+
+            newResult.Add(MergeData(result.First(x => x.TeamId == 21250110), result.First(x => x.TeamId == 193400309), "AM"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 1097230408), result.First(x => x.TeamId == 1033330107), "AP"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 20090210), result.First(x => x.TeamId == 165330106), "AR"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 19570310), result.First(x => x.TeamId == 82340403), "AS"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 70870307), result.First(x => x.TeamId == 1184850407), "DPR"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 21140104), result.First(x => x.TeamId == 20500107), "DY"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 1123400102), result.First(x => x.TeamId == 784390209), "GK"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 987530201), result.First(x => x.TeamId == 988860307), "HP"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 171670204), result.First(x => x.TeamId == 173220206), "MS"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 19470302), result.First(x => x.TeamId == 72440106), "NA"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 1066590309), result.First(x => x.TeamId == 64680407), "NH"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 3350210), result.First(x => x.TeamId == 3550204), "NV"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 87390302), result.First(x => x.TeamId == 943170101), "PA"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 928310403), result.First(x => x.TeamId == 789770404), "RA"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 19170203), result.First(x => x.TeamId == 48170204), "RK"));
+            newResult.Add(MergeData(result.First(x => x.TeamId == 1178370206), result.First(x => x.TeamId == 1106590310), "SP"));
+
+            return newResult.OrderByDescending(x => x.Points).Select((x, i) => new LeagueSummary
+            {
+                Rank = i + 1,
+                TeamName = x.TeamName,
+                Points = x.Points,
+                TransfersDone = x.TransfersDone
+            }).ToList();
+
+            //return newResult;
+
+        }
+
+        public LeagueSummary MergeData(LeagueSummary Team1, LeagueSummary Team2, string TeamName)
+        {
+            LeagueSummary item = new LeagueSummary
+            {
+                TeamName = TeamName,
+                Points = Team1.Points + Team2.Points,
+                TransfersDone = Team1.TransfersDone + Team2.TransfersDone,
+
+                DayPoints = Team1.DayPoints + Team2.DayPoints,
+                DayTransfers = Team1.DayTransfers + Team2.DayTransfers
+            };
+
+            return item;
+
         }
 
         public async Task<Leaderboard> GetLeaderboard(RequestData request)

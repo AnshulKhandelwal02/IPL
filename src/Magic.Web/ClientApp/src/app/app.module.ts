@@ -8,13 +8,15 @@ import { NgxLoadingModule } from 'ngx-loading';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { GokuldhamComponent } from './gokuldham/gokuldham.component';
+import { MahasangramComponent } from './mahasangram/mahasangram.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    FetchDataComponent
+    MahasangramComponent,
+    GokuldhamComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -22,7 +24,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'gokuldham', component: FetchDataComponent },
+      { path: 'gokuldham', component: GokuldhamComponent },
+      { path: 'mahasangram', component: MahasangramComponent },
     ]),
     NgxLoadingModule.forRoot({})
   ],

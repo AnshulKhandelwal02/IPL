@@ -11,5 +11,6 @@ namespace Magic.Web.Services
         Task<List<TeamDataList>> GetTransfers(RequestData request, Leaderboard leaderboard);
         Task<Leaderboard> GetLeaderboard(RequestData request);
         List<LeagueSummary> AnalyzeData(List<TeamDataList> rawData);
+        List<LeagueSummary> SummarizeData(List<LeagueSummary> result);
     }
 }

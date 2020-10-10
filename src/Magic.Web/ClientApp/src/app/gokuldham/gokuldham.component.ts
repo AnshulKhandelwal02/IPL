@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { IApiResponse, TeamSummary, TeamDataList } from "../models";
 
 @Component({
-  selector: 'app-fetch-data',
-  templateUrl: './fetch-data.component.html'
+  selector: 'app-gokuldham',
+  templateUrl: './gokuldham.component.html'
 })
-export class FetchDataComponent {
+export class GokuldhamComponent {
   title = 'IPL-MAGIC';
 
   teamSummary: TeamSummary[];

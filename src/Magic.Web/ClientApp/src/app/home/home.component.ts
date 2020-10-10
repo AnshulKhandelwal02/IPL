@@ -14,7 +14,7 @@ export class HomeComponent {
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.loading = true;
-    http.get<IApiResponse<TeamSummary[]>>(baseUrl + 'data/mahasangram-summary').subscribe(result => {
+    http.get<IApiResponse<TeamSummary[]>>(baseUrl + 'data/summary').subscribe(result => {
       console.log(result);
       this.loading = false;
       this.teamSummary = result.data;
@@ -40,32 +40,3 @@ export class HomeComponent {
 //     { rank:15, name:'RK',team1:'Zandu Balm',team2:'Zehereley',points:8698,subs:60, subs1:30,subs2:30 },
 //     { rank:16, name:'AS',team1:'Sopan Paranjape',team2:'salvationarmy',points:8401.5,subs:66, subs1:36,subs2:30 },
 //   ]  
-
-// export interface TeamSummary {
-//    teamName: String;
-//    points: number;
-//    transfersDone: number;
-//    viceCaptain: string;
-//    captain: string;
-//  }
-
-// export interface TeamDataList {
-//   teamId: number;
-//   teamName: string;
-
-// }
-
-// export interface IApiResponse<T> {
-//   messageKey: string;
-//   errorCode: string;
-//   responseType: ResponseType;
-//   data: T;
-// }
-
-// export enum ResponseType {
-//   error,
-//   success,
-//   fatal,
-//   successWithWarning
-// }
-

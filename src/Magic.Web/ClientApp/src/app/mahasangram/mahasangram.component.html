@@ -64,39 +64,34 @@
 </div>
 
 <div class="content" role="main">
-  <div class="container">
-    <table class="table table-striped">
-      <thead>  
-          <tr>  
-            <th>Rank</th>
-            <th>Team Name</th>
-            <th>Points</th>  
-            <th>Subs</th>
-            <!-- <th>Day Points</th>  
-            <th>Day Subs</th>
-            <th>Team 1</th>
-            <th>Points</th>  
-            <th>Subs</th>
-            <th>Day Points</th>  
-            <th>Day Subs</th>
-            <th>Team 2</th>
-            <th>Points</th>  
-            <th>Subs</th>
-            <th>Day Points</th>  
-            <th>Day Subs</th> -->
-          </tr>
-      </thead>  
-      <tbody>  
-        <tr *ngFor="let team of teamSummary">  
-          <td>{{ team.rank }}</td>
-          <td>{{ team.teamName }}</td>
-          <td>{{ team.points }}</td>
-          <td>{{ team.transfersDone }}</td>  
-        </tr>  
-      </tbody>  
-    </table>
 
-    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  <div class="container">
+      <table class="table table-striped">
+        <thead>  
+            <tr>  
+              <th>Team Id</th>  
+              <th>Rank</th>
+              <th>Team Name</th>
+              <th>Points</th>  
+              <th>Subs</th>  
+              <th>Captain</th>  
+              <th>Vice-Captain</th>  
+            </tr>
+        </thead>  
+        <tbody>  
+          <tr *ngFor="let team of teamSummary">  
+            <td>{{ team.teamId }}</td>
+            <td>{{ team.rank }}</td>
+            <td>{{ team.teamName }}</td>
+            <td>{{ team.points }}</td>
+            <td>{{ team.transfersDone }}</td>  
+            <td>{{ team.captain }}</td>  
+            <td>{{ team.viceCaptain }}</td>  
+          </tr>  
+        </tbody>  
+      </table>
+
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
   </div>
 
   <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
