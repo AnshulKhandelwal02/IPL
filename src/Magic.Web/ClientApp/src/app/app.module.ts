@@ -22,7 +22,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'gokuldham', component: FetchDataComponent },
     ]),
     NgxLoadingModule.forRoot({})
   ],

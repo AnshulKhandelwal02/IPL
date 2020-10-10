@@ -8,8 +8,8 @@ namespace Magic.Web.Services
 {
     public interface IMagicService
     {
-        Task<List<TeamDataList>> GetTransfers(Leaderboard leaderboard);
-        Task<Leaderboard> GetLeaderboard();
+        Task<List<TeamDataList>> GetTransfers(RequestData request, Leaderboard leaderboard);
+        Task<Leaderboard> GetLeaderboard(RequestData request);
         List<LeagueSummary> AnalyzeData(List<TeamDataList> rawData);
     }
 }
