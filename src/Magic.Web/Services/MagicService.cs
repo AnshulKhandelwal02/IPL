@@ -163,6 +163,13 @@ namespace Magic.Web.Services
                 leagueSummary.TransfersDone = data.Teams.Sum(x => x.SubsUsed).ToString();
                 leagueSummary.Points = data.Gdpts.Sum(x => Convert.ToDecimal(x.Gdpts)).ToString();
 
+                leagueSummary.Captain =
+                    data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => x.Gdid)))?.CaptainName;
+
+                leagueSummary.ViceCaptain =
+                    data.Teams.FirstOrDefault(x => x.Gdid == (data.Teams.Max(y => x.Gdid)))?.ViceCaptainName;
+
+
                 result.Add(leagueSummary);
             }
 
